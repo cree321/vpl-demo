@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #333;
+  perspective: 2px;
+}
+
+#view0 {background-color: #b00;}
+#edit0 {background-color: #0b0; display:none;}
+#nav0 {background-color: #00b;}
+.view {
+/*   display: none; */
+  flex: 1 1;
+  touch-action: none;
+  user-select: none;
+}
+.edit {
+  flex: 2 1;
+  touch-action: none;
+  user-select: none;
+}
+.nav-canvas {
+  height: 4em;
+  width: 100%;
+}
+.nav {
+  height: 66%
+  transform-style: preserve-3d;
+/*   flex: 0 0 5em; */
+  padding: 1em 0 3em;
+  padding-top: 90%;
+    width: 100%;
+    align-self: end;
+  white-space: nowrap;
+  /*   overflow-y: hidden; */
+  overflow-x: auto;
+  line-height: 3.2em;
+/*   transform: perspective(800px); */
+/* transform: perspective(500px) translate3d(0, 0, 0px); */
+}
+.nav span {position: relative;}
+.nav span p {
+  background-color: #f00;
+  position: absolute;
+  left: -99.3em;
+  top: -18.9em;
+/*   transform-origin: center; */
+transform: translateZ(1.7px) scale(.76);
+/*   transform: perspective(800px) translate3d(0, 0, 797px) scale(0.006); */
+  overflow: hidden;
+}
+.nav >canvas#nav0 {
+  position: absolute;
+  float: left;
+  z-index: -1;
+}
+
+
+#edit-control {
+  display: none;
+  touch-action: none;
+  user-select: none;
+  background-image: radial-gradient(circle at center, #0003 8%, #0027 9%, #0027 12%, #0003 13%);
+  position: absolute;
+/*   width: 20em; */
+  width: 5cm;
+  aspect-ratio: 1;
+  top: -2.5cm;
+  left: -2.5cm;
+  border-radius: 100%;
+  transform-origin: center;
+/*   background-color: #000; */
+}
+.control {
+  touch-action: none;
+  user-select: none;
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  border-radius: 100% 0 56%;
+  transform-origin: bottom right;
+  background-color: #444;
+}
+.control:hover {
+  background-color: #222;
+}
+#edit-control-top {
+  transform: rotate(45deg);
+}
+#edit-control-bottom {
+  transform: rotate(-135deg);
+}
+#edit-control-right {
+  transform: rotate(135deg);
+}
+#edit-control-left {
+  transform: rotate(-45deg);
+}
+
+</style>
+</head>
+<body>
+<canvas id="view0" class="view">
+</canvas><canvas id="edit0" class="edit">
+</canvas><div class="nav">
+<canvas id="nav0" class="nav-canvas" width="10" height="10"></canvas>
+  Testing... try to scroll to see more of this timeline. Here's a lot more text so you can really get the feeling of what panning in this editor may feel like. Have you tried going back as well? It should work just as well. "Should", being the magic word! ;)
+  <span><p>Testing... try to scroll to see more of this timeline. Here's a lot more text so you can really get the feeling of what panning in this editor may feel like. Have you tried going back as well? It should work just as well. "Should", being the magic word! ;)<p></span>
+</div>
+<div id="edit-control">
+  <div id="edit-control-top" class="control">Function</div>
+  <div id="edit-control-left" class="control">Variable</div>
+  <div id="edit-control-right" class="control">Jump</div>
+  <div id="edit-control-bottom" class="control">Process</div>
+</div>
+<script>
+const edit_canvas = document.querySelector(".view");
+const edit_control = document.querySelector("#edit-control");
+
+edit_canvas.addEventListener("pointerdown", (e) => {
+  let transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+  edit_control.style.transform = transform;
+  edit_control.style.display = "initial";
+});
+window.addEventListener("pointerup", (e) => {
+  edit_control.style.display = "none";
+});
+</script>
+</body>
+</html>
